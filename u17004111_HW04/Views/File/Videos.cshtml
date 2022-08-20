@@ -1,0 +1,47 @@
+﻿@model IEnumerable<u17004111_HW04.Models.FileModel>
+
+<div class="row row-cols-1 row-cols-md-4">
+    @{
+        if (Model != null)
+        {
+            foreach (var video in Model)
+            {
+                var videoPath = "~/User_Data/Uploads/Videos/" + video.FileName;
+
+                <div class="col mb-4">
+                    <div class="card h-100">
+                        <div class="fancybox">
+                            <a href="@Url.Content(videoPath)">
+                                <video class="card-img-top" src="@Url.Content(videoPath)" />
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"><small class="text-muted">@video.FileName</small></p>
+                        </div>
+                        <div class="card-footer">
+                            <span>
+                                @Html.ActionLink("Download", "Download", "File", new { fileName = video.FileName }, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Delete", "Delete", "File", new { fileName = video.FileName }, new { @class = "btn btn-secondary" })
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".fancybox a").fancybox({
+            autoSize: false,
+            autoDimensions: false,
+            width: 1024,
+            height: 768,
+            padding: 0,
+            title: this.title,
+            href: $(this).attr('href'),
+            type: 'iframe'
+        });
+    });
+</script>

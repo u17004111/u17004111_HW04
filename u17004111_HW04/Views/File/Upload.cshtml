@@ -1,0 +1,34 @@
+﻿<h1>Upload your educational materials</h1>
+@using (Html.BeginForm("Upload", "File", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div>
+        <!-- Radio buttons to capture what type of file is being uploaded -->
+        <br />
+        <div>
+            <input class="radioBtn" type="radio" name="radio" id="doc" checked /><span> Document</span>
+            <br />
+            <input class="radioBtn" type="radio" name="radio" id="img" /><span> Image</span>
+            <br />
+            <input class="radioBtn" type="radio" name="radio" id="vid" /><span> Video</span>
+            <br />
+            <br />
+        </div>
+
+        <!-- Standard browse file and upload form section -->
+        <div>
+            <input type="file" name="File" />
+            <br />
+            <br />
+            <input type="submit" value="Upload" class=" btn btn-primary" />
+        </div>
+    </div>
+    @Html.Hidden("selectedRadio")
+}
+
+<script>
+    $("#selectedRadio").val("doc");
+
+    $(".radioBtn").on("click", function () {
+        $("#selectedRadio").val(this.id);
+    });
+</script>

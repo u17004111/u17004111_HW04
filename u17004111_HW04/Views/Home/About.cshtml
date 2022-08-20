@@ -1,0 +1,122 @@
+﻿@model IEnumerable<u17004111_HW04.Models.SDG_card>
+
+@{
+    ViewBag.Title = "About";
+}
+<!-- JQ script that displays a modal with the clicked SDG's description -->
+<script>
+    $(document).ready(function () {
+        $(document).on('click', ".card-img-top", function (event) {
+            let imgName = $(this).attr('name');
+            let sdgTitle = $(this).siblings(".card-img-overlay").children("h5").html();
+            let sdgDesc = $(this).attr('value');
+
+            $("#cardInfoModal").find(".modal-title").html(sdgTitle);
+            $("#cardInfoModal").find(".modal-body").html(sdgDesc);
+            $("#cardInfoModal").modal('show');
+
+            console.log(sdgTitle);
+            console.log(imgName);
+            console.log("Pop");
+        });
+    });
+</script>
+
+<img src="~/Resources/Other_Images/Read-Logo_long-copy.png" class="img-fluid w-100"/>
+<h2>READ Educational Trust</h2>
+<p>
+    READ operates primarily as an educator development agency in the fields of language,
+    literacy and communication and is a leader in educational assessment, materials development and resource provision.
+    In terms of local and international resource selection and provision, READ delivers community and life-skills training
+    to young people about to enter the workforce, as well as training for adults in business, including presentation,
+    communication and conflict resolution skills.
+</p>
+<hr />
+
+<h2>READ's Sustainable Development Goals</h2>
+<h5>The three SDG's below have been identified to be the ones that READ overarchingly aims to work towards.</h5>
+
+
+<br />
+
+<!-- Write some razor here that dynamically populates the webpage with the SDG cards -->
+<!-- Put some JS or JQ in as well so one can change the cards from compact grid view to larger informative view -->
+<!-- Put some JS or JQ in as well for dark/light mode -->
+<div class="body-content">
+    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 " id="cardHolder">
+        @{
+            foreach (var card in Model)
+            {
+                var number = card.Number;
+                var otherSDGString = "otherSDG" + number.ToString();
+
+                if (number == 3 || number == 8 || number == 10)
+                {
+                    <div class="col mb-4">
+                        <div class="card h-100">
+                            <img src="~/Resources/SDG/Thumbnails/@card.Img_title" id="sdgCard" name="@card.Img_title" value="@card.Description" class="card-img-top" alt="@card.Img_title" type="button" loading="lazy" />
+                            <div class="card-img-overlay" hidden>
+                                <h5 class="card-title">@card.Title</h5>
+                                <p class="card-text">@card.Description</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        }
+    </div>
+    <hr />
+
+    <h2>Other SDG's</h2>
+    <img src="~/Resources/SDG/E_SDG_logo_without_UN_emblem_horizontal_WEB.png.png" class="img-fluid" aria-hidden="false" />
+
+    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-leg-6 " id="cardHolder">
+        @{
+            foreach (var card in Model)
+            {
+                var number = card.Number;
+                var otherSDGString = "otherSDG" + number.ToString();
+
+                if (number != 3 || number != 8 || number != 10)
+                {
+                    <div class="col mb-4" id="sdgCard">
+                        <div class="card h-100">
+                            <img src="~/Resources/SDG/Thumbnails/@card.Img_title" id="sdgCard" name="@card.Img_title" value="@card.Description" class="card-img-top" alt="@card.Img_title" type="button" loading="lazy" />
+                            <div class="card-img-overlay" hidden>
+                                <h5 class="card-title">@card.Title</h5>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        }
+        <!-- Last little SDG logo as a card, linking to the UN's SDG Site. -->
+        <div class="col mb-4">
+            <div class="card h-100 border-0">
+                <a href="https://sdgs.un.org/goals">
+                    <img src="~/Resources/SDG/SDG_Wheel_Transparent_WEB.png" id="sdgWheel" class="card-img-top" type="button" data-toggle="tooltip" data-placement="top" title="Click to learn more" loading="lazy" />
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="cardInfoModal" tabindex="-1" aria-labelledby="cardInfoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cardInfoModalLabel">ModalTitle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary mx-auto" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

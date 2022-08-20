@@ -1,0 +1,124 @@
+﻿<h2>Create account page</h2>
+<h4>Please enter your details below</h4>
+
+<form method="post" id="newForm">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" />
+        <br />
+
+        <label for="surname">Surname</label>
+        <input type="text" name="surname" id="surname" />
+        <br />
+
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" />
+        <br />
+
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" />
+        <br />
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" />
+        <br />
+    </div>
+
+    <div class="form-group">
+        <label for="studBtn">Student</label>
+        <input class="radioBtn" type="radio" name="radio" id="stud" value="stud" checked/>
+        <br />
+        <label for="eduBtn">Educator</label>
+        <input class="radioBtn" type="radio" name="radio" id="edu" value="edu" />
+        <br />
+        <label for="adminBtn">Administrator</label>
+        <input class="radioBtn" type="radio" name="radio" id="admin" value="admin" />
+        <br />
+        <br />
+
+        <div class="form-group" id="educatorOptions">
+            <label>Institution</label>
+            <input type="text" name="institution" />
+            <br />
+            <label>Qualifications</label>
+            <input type="text" name="qualifications" />
+        </div>
+    </div>
+    <br />
+
+    <input type="text" id="selectedRadio" name="selectedRadio" hidden />
+</form>
+
+<input class="btn btn-primary" type="button" id="submit" value="Create"/>
+
+<!-- Gonna need some JQuery over here to change what is display if a user selects educator or not, and also for input checking. -->
+<script>
+    //Radio button handling
+    $("#selectedRadio").val("stud");
+    $("#educatorOptions").hide();
+
+    $(".radioBtn").on("click", function () {
+        $("#selectedRadio").val(this.id);
+    });
+
+    $(".radioBtn").on("click", function () {
+        if (this.id == "edu") {
+            $("#educatorOptions").show();
+        }
+        else {
+            $("#educatorOptions").hide();
+        }
+    });
+
+    //Some input checking
+    var allwell = new Boolean;
+    $("#submit").on("click", function () {
+        if ($("#name").val() == null || $("#name").val() == "") {
+            $("#name").css("border-color", "red");
+            allwell = false;
+            alert("Name");
+        }
+        else {
+            $("#name").css("border-color", "grey");
+
+            if ($("#surname").val() == null || $("#surname").val() == "") {
+                $("#surname").css("border-color", "red");
+                allwell = false;
+            }
+            else {
+                $("#surname").css("border-color", "grey");
+
+                if ($("#email").val() == null || $("#email").val() == "") {
+                    $("#email").css("border-color", "red");
+                    allwell = false;
+                }
+                else {
+                    $("#email").css("border-color", "grey");
+
+                    if ($("#username").val() == null || $("#username").val() == "") {
+                        $("#username").css("border-color", "red");
+                        allwell = false;
+                    }
+                    else {
+                        $("#username").css("border-color", "grey");
+
+                        if ($("#password").val() == null || $("#password").val() == "") {
+                            $("#password").css("border-color", "red");
+                            allwell = false;
+                        }
+                        else {
+                            $("#password").css("border-color", "grey");
+
+                            allwell = true;
+                        }
+                    }
+                }
+            }
+        }
+        if (allwell == true) {
+            $('form#newForm').submit();
+        }
+        else { }
+    });
+
+</script>

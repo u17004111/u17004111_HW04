@@ -1,0 +1,51 @@
+﻿@model IEnumerable<u17004111_HW04.Models.User>
+
+<h2>Login</h2>
+
+<form method="post">
+    <label>Username:</label><input type="text" id="username" name="username" />
+    <br />
+    <label>Password:</label><input type="password" id="password" name="password" />
+    <br />
+    <input class="btn btn-primary" type="submit" value="Login" formmethod="post" />
+</form>
+
+<br />
+<h3>@ViewData["loginMessage"]</h3>
+
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Surname
+        </th>
+        <th>
+            Username
+        </th>
+        <th>
+            Password
+        </th>
+    </tr>
+
+    @{
+        foreach (var user in Model)
+        {
+            <tr>
+                <td>
+                    @user.Name
+                </td>
+                <td>
+                    @user.Surname
+                </td>
+                <td>
+                    @user.getUsername()
+                </td>
+                <td>
+                    @user.getPassword()
+                </td>
+            </tr>
+        }
+    }
+</table>

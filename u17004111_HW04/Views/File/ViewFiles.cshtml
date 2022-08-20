@@ -1,0 +1,35 @@
+﻿<h1>View all educator uploaded materials</h1>
+<!-- Display in grid format so educator can preview document. -->
+<!-- Note: list of all directories is in the model -->
+
+<form method="post">
+    <table class="table table-hover">
+        <thead class="table thead-dark">
+            <tr>
+                <th>File name</th>
+                <th></th>
+                <th>Download option</th>
+                <th>Delete option</th>
+            </tr>
+        </thead>
+        @{
+            if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td colspan="2">
+                            @item.FileName
+                        </td>
+                        <td>
+                            @Html.ActionLink("Download", "Download", "File", new { fileName = item.FileName }, new { @class = "btn btn-primary" })
+                        </td>
+                        <td>
+                            @Html.ActionLink("Delete", "Delete", "File", new { fileName = item.FileName }, new { @class = "btn btn-secondary" })
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </table>
+</form>

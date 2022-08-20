@@ -1,0 +1,63 @@
+﻿@model dynamic
+
+@{
+    //var user = ViewData["usertype"];
+    //This user object in the model is the current user.
+    var usermodel = Model.currentUser;
+    var usertype = usermodel.GetType().Name;
+
+    if (usermodel != null)
+    {
+        <h1>Login successful!</h1>
+        <h3>@usermodel.getUsername()</h3>
+        <h3>@ViewData["userType"]</h3>
+        <h3>@usertype</h3>
+
+        switch (usertype)
+        {
+            case "Student":
+                <h3>You are logged in as a student.</h3>
+                <a href="@Url.Action("Upload", "File")" title="View files" class="links">
+                    <img alt="View files" src="@Url.Content("~/Resources/Other_Images/documents.png")">
+                </a>
+                <a href="@Url.Action("Profile", "Account")" title="Profile" class="links">
+                    <img alt="View profile" src="@Url.Content("~/Resources/Other_Images/man.png")">
+                </a>
+                break;
+
+            case "Educator":
+                <h3>You are logged in as an educator.</h3>
+                <a href="@Url.Action("Upload", "File")" title="Upload files" class="links">
+                    <img alt="Upload files" src="@Url.Content("~/Resources/Other_Images/upload_document.png")">
+                </a>
+                <a href="@Url.Action("View", "File")" title="View files" class="links">
+                    <img alt="View files" src="@Url.Content("~/Resources/Other_Images/file-delete.png")">
+                </a>
+                <a href="@Url.Action("Profile", "Account")" title="Upload files" class="links">
+                    <img alt="View profile" src="@Url.Content("~/Resources/Other_Images/man.png")">
+                </a>
+                break;
+
+            case "Administrator":
+                <h3>You are logged in as an administrator.</h3>
+                <a href="@Url.Action("Admin", "Admin")" title="View admin functions" class="links">
+                    <img alt="View admin" src="@Url.Content("~/Resources/Other_Images/admin.png")">
+                </a>
+                <a href="@Url.Action("Profile", "Account")" title="Upload files" class="links">
+                    <img alt="View profile" src="@Url.Content("~/Resources/Other_Images/man.png")">
+                </a>
+                break;
+
+            default:
+                <h2>Something went wrong. :/</h2>
+                break;
+        }
+    }
+    else
+    {
+        <h1>No user is logged in.</h1>
+    }
+
+
+
+}

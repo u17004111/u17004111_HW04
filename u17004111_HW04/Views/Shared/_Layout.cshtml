@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - u17004111 HW04</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</head>
+
+<body class="pt-0">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            @Html.ActionLink("HW04: READ Educational Trust", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Admin", "Admin", "Admin", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                            Materials
+                        </a>
+                        <div class="dropdown-menu">
+                            @Html.ActionLink("Files", "Files", "File", null, new { @class = "dropdown-item" })
+
+                            @Html.ActionLink("Images", "Images", "File", null, new { @class = "dropdown-item" })
+
+                            @Html.ActionLink("Videos", "Videos", "File", null, new { @class = "dropdown-item" })
+
+                        </div>
+                    </li>
+                </ul>
+                <div class="ml-auto mr-0">
+                    @Html.ActionLink("Login", "Login", "Account", null, new { @class = "" })
+                    
+                    <img width="50px" height="50px" src="~/Resources/Other_Images/userImage.png" class="img-fluid" />
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer class="footer">
+            <p>&copy; @DateTime.Now.Year - u17004111 HW04</p>
+        </footer>
+    </div>
+    
+</body>
+</html>

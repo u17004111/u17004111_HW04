@@ -1,0 +1,42 @@
+﻿@model IEnumerable<u17004111_HW04.Models.FileModel>
+
+<div class="row row-cols-1 row-cols-md-4">
+    @{
+        if (Model != null)
+        {
+            foreach (var image in Model)
+            {
+                var imagePath = "~/User_Data/Uploads/Images/" + image.FileName;
+                //var absolutePath = new Uri(Request.Url, Url.Content(imagePath));
+
+                <div class="col mb-4">
+                    <div class="card h-100">
+                        <div class="fancybox">
+                            <a href="@Url.Content(imagePath)">
+                                <img class="card-img-top" src="@Url.Content(imagePath)" />
+                            </a>
+                        </div>
+
+                        <div class="card-body h-100">
+                            <p class="card-text"><small class="text-muted">@image.FileName</small></p>
+                        </div>
+                        <div class="card-footer">
+                            <span>
+                                @Html.ActionLink("Download", "Download", "File", new { fileName = image.FileName }, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Delete", "Delete", "File", new { fileName = image.FileName }, new { @class = "btn btn-secondary" })
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".fancybox a").fancybox({
+            fitToView: true,
+        });
+    });
+</script>
