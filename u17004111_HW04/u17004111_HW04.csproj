@@ -133,6 +133,14 @@
   <ItemGroup>
     <Content Include="Resources\Other_Images\admin.png" />
     <Content Include="Resources\Other_Images\Diagrams\Class_diagram_rev1.0.png" />
+    <Content Include="Resources\Other_Images\Diagrams\Class_diagram_rev2.0.drawio.png" />
+    <Content Include="Resources\Other_Images\Diagrams\UC2.1.png" />
+    <Content Include="Resources\Other_Images\Diagrams\UC2.2.png" />
+    <Content Include="Resources\Other_Images\Diagrams\UC2.3.png" />
+    <Content Include="Resources\Other_Images\Diagrams\UC2.4.png" />
+    <Content Include="Resources\Other_Images\Diagrams\UC2.5.png" />
+    <Content Include="Resources\Other_Images\Diagrams\UC2.6.png" />
+    <Content Include="Resources\Other_Images\Diagrams\UC2.7.png" />
     <Content Include="Resources\Other_Images\Diagrams\UC_Diagram1_Admin.drawio.png" />
     <Content Include="Resources\Other_Images\Diagrams\UC_Diagram2_Student.drawio.png" />
     <Content Include="Resources\Other_Images\Diagrams\UC_Diagram3_Educator.drawio.png" />
@@ -141,16 +149,6 @@
     <Content Include="Resources\Other_Images\file-delete.png" />
     <Content Include="Resources\Other_Images\man.png" />
     <Content Include="Resources\Other_Images\userImage.png" />
-    <Content Include="User_Data\Uploads\Images\Redsilo1.png" />
-    <Content Include="User_Data\Uploads\Images\Redsilo2.png" />
-    <Content Include="User_Data\Uploads\Images\Redsilo3.png" />
-    <Content Include="User_Data\Uploads\Images\Redsilo4.png" />
-    <Content Include="User_Data\Uploads\Images\Redsilo5.png" />
-    <Content Include="User_Data\Uploads\Images\Redsilo6.png" />
-    <Content Include="User_Data\Uploads\Images\Redsilo7.png" />
-    <Content Include="User_Data\Uploads\Images\Redsilo8.png" />
-    <Content Include="User_Data\Uploads\Images\Redsilo9.png" />
-    <Content Include="User_Data\Uploads\Videos\The Story of How I Became a BIT Information Systems Student.mp4" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -230,9 +228,8 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <Content Include="User_Data\Uploads\Files\2022 - INF272 Homework04 Requirements.pdf" />
-    <Content Include="User_Data\Uploads\Files\TuksRAG.drawio" />
     <Content Include="Resources\Other_Images\UC_Diagrams.pdf" />
+    <Content Include="Resources\Other_Images\Diagrams\UCN_Combined_u17004111.pdf" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
@@ -339,10 +336,9 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Admin\Admin.cshtml" />
-    <Content Include="Views\Admin\EditMaterials.cshtml" />
-    <Content Include="Views\Admin\ReviewUploads.cshtml" />
-    <Content Include="Views\Admin\ReviewMembers.cshtml" />
+    <Content Include="Views\Account\Admin.cshtml" />
+    <Content Include="Views\Account\EditMaterials.cshtml" />
+    <Content Include="Views\Account\ReviewMembers.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\CreateAccount.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
@@ -351,10 +347,14 @@
     <Content Include="Views\File\Videos.cshtml" />
     <Content Include="Views\File\Upload.cshtml" />
     <Content Include="Views\File\ViewFiles.cshtml" />
+    <Content Include="Views\Account\UserDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Resources\Other_Images\Narratives\" />
+    <Folder Include="User_Data\Uploads\Files\" />
+    <Folder Include="User_Data\Uploads\Images\" />
+    <Folder Include="User_Data\Uploads\Videos\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

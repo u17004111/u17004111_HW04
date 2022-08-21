@@ -5,8 +5,8 @@
         <tr>
             <th>File name</th>
             <th></th>
-            <th>Download option</th>
-            <th>Delete option</th>
+            <th>Author</th>
+            <th>Download</th>
         </tr>
     </thead>
 
@@ -20,10 +20,10 @@
                         @item.FileName
                     </td>
                     <td>
-                        @Html.ActionLink("Download", "Download", "File", new { fileName = item.FileName }, new { @class = "btn btn-primary" })
+                        @item.Author
                     </td>
                     <td>
-                        @Html.ActionLink("Delete", "Delete", "File", new { fileName = item.FileName }, new { @class = "btn btn-secondary" })
+                        @Html.ActionLink("Download", "Download", "File", new { fileName = item.FileName }, new { @class = "btn btn-primary" })
                     </td>
                 </tr>
             }

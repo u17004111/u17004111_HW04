@@ -15,11 +15,8 @@ namespace u17004111_HW04.Controllers
     public class FileController : Controller
     {
         User currentUser;
+        List<FileModel> fileList = new List<FileModel>();
 
-        //View ActionResults
-        //------------------------------------------
-        //This ActionResult returns the filepaths of every file in the 
-        //'Documents' folder to the view that displays documents, via the model of the view.
         public ActionResult Files()
         {
             var docPaths = Directory.GetFileSystemEntries(Server.MapPath("~/User_Data/Uploads/Files/"));
@@ -33,9 +30,6 @@ namespace u17004111_HW04.Controllers
             return View(documents);
         }
 
-        //Regarding images (I.e. PDF, Word, and PPTx)
-        //This ActionResult returns the filepaths of every image in the 
-        //'Images' folder to the view that displays images, via the model of the view.
         public ActionResult Images()
         {
             var imgPaths = Directory.GetFileSystemEntries(Server.MapPath("~/User_Data/Uploads/Images/"));
@@ -66,7 +60,20 @@ namespace u17004111_HW04.Controllers
         public ActionResult ViewFiles()
         {
             var files = getAllFiles();
+            currentUser = getCurrent();
+            fileList.Clear();
+            var authorName = currentUser.Name + " " + currentUser.Surname;
 
+            //Only display files uploaded by the current user, who miust be an educator.
+            foreach(var file in files)
+            {
+                if(authorName == file.Author && currentUser.GetType().Equals(typeof(Educator)))
+                {
+                    fileList.Add(file);
+                }
+            }
+
+            ViewData["currentUser"] = authorName;
             //Return list to view
             return View(files);
         }
@@ -92,33 +99,51 @@ namespace u17004111_HW04.Controllers
                 }
             }
 
+            AccountController tempcontroller = new AccountController();
+            tempcontroller.increaseRating(fileName);
+
             return File(filePath, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
 
         //Simple download fileresult for the uc diagrams. Downloads one pdf of all diagrams.
         public FileResult DownloadUC()
         {
-            string filePath = filePath = Server.MapPath(Url.Content("~/Resources/Other_Images/UC_Diagrams.pdf"));
-            return File(filePath, System.Net.Mime.MediaTypeNames.Application.Octet, "UC_Diagrams.pdf");
+            string filePath = filePath = Server.MapPath(Url.Content("~/Resources/Other_Images/Diagrams/UCN_Combined_u17004111.pdf"));
+            return File(filePath, System.Net.Mime.MediaTypeNames.Application.Octet, "UCN_Diagrams.pdf");
         }
 
-        //Another fileresults for the uc narratives. Downloads one pdf of all narratives.
-        public FileResult DownloadUCN()
+        public ActionResult Delete(string fileName)
         {
-            string filePath = filePath = Server.MapPath(Url.Content("~/Resources/Uploads/Files/uc_narratives"));
-            return File(filePath, System.Net.Mime.MediaTypeNames.Application.Octet, "UC_Narratives.pdf");
-        }
+            string filePath = "";
+            //Check firstly in Files folder
+            
+            if (System.IO.File.Exists(filePath)) 
+            {
+                filePath = Server.MapPath(Url.Content("~/User_Data/Uploads/Files/" + fileName)); 
+            }
+            else
+            {
+                //Check secondly in Images folder
+                filePath = Server.MapPath(Url.Content("~/User_Data/Uploads/Images/" + fileName));
+                if (System.IO.File.Exists(filePath)) { }
+                else
+                {
+                    //Lastly resort to Videos folder
+                    filePath = Server.MapPath(Url.Content("~/User_Data/Uploads/Videos/" + fileName));
+                }
+            }
 
-        public ActionResult Delete(string filePath)
-        {
             try
             {
                 System.IO.File.Delete(filePath);
-
+                getAllFiles();
+                saveRegistry();
+                getRegistry();
                 return Redirect(Request.UrlReferrer.PathAndQuery);
             }
             catch
             {
+                ViewData["Message"] = "Delete unsuccessful";
                 return Redirect(Request.UrlReferrer.PathAndQuery);
             }
         }
@@ -133,11 +158,10 @@ namespace u17004111_HW04.Controllers
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase File, string selectedRadio)
         {
+            //Only educators can upload files anyways, so cast won't cause problems.
+            Educator currentEdu = getCurrent() as Educator;
             var fileFolder = "";
             FileModel newfile = new FileModel();
-            newfile.FileName = File.FileName;
-            newfile.Author = getCurrent().Name + " " + getCurrent().Surname;
-            newfile.Approved = false;
 
             switch (selectedRadio)
             {
@@ -162,15 +186,33 @@ namespace u17004111_HW04.Controllers
             {
                 var fileName = Path.GetFileName(File.FileName);
                 var fullPath = Path.Combine(fileFolder, fileName);
+                newfile.FileName = File.FileName;
+                newfile.Author = getCurrent().Name + " " + getCurrent().Surname;
+                newfile.Approved = false;
 
                 while (System.IO.File.Exists(fullPath))
                 {
                     var newName = Path.GetFileNameWithoutExtension(fileName) + "1";
                     fileName = Path.GetFileName(newName + Path.GetExtension(File.FileName));
+                    fullPath = Path.Combine(fileFolder, fileName);
                     newfile.selectedFilePath = fullPath;
                 }
-                
+
+                //Linking educator to file uplaoded.
+                currentEdu.contributionCount += 1;
+                currentEdu.Contributions.Add(newfile.FileName);
+                //RedirectToAction("updateUser", "Account", new { User = currentEdu });
+                AccountController tempcontroller = new AccountController();
+                tempcontroller.updateUser(currentEdu);
+                tempcontroller.increaseRating(fileName);
+
+                //Saving file, finally.
                 File.SaveAs(fullPath);
+            }
+            else
+            {
+                ViewData["Message"] = "File must not be empty.";
+                return View();
             }
 
             if(Server.MapPath("~/App_Data/filelist.ser") == null)
@@ -179,14 +221,14 @@ namespace u17004111_HW04.Controllers
             }
             updateRegistry(newfile);
 
-            return RedirectToAction("Index");
+            ViewData["Message"] = "File uploaded succesfully";
+            return View();
         }
-
 
         //These methods deal with the file registry, which is a serialised file containing the info of all currently uploaded files.
         public void updateRegistry(FileModel file)
         {
-            var files = getAllFiles();
+            List<FileModel> files = getAllFiles();
             files.Add(file);
 
             FileStream output = new FileStream(System.Web.Hosting.HostingEnvironment.MapPath("~/App_Data/filelist.ser"), FileMode.Create, FileAccess.Write);
@@ -203,6 +245,22 @@ namespace u17004111_HW04.Controllers
                 BinaryFormatter bFormatter = new BinaryFormatter();
                 bFormatter.Serialize(output, files);
                 output.Close();
+        }
+
+        public List<FileModel> getRegistry()
+        {
+            var fileReg = System.Web.Hosting.HostingEnvironment.MapPath("~/App_Data/filelist.ser");
+            try
+            {
+                FileStream input = new FileStream(fileReg, FileMode.Open, FileAccess.Read);
+                BinaryFormatter bFormatter = new BinaryFormatter();
+                fileList = null;
+                fileList = (List<FileModel>)bFormatter.Deserialize(input);
+                input.Close();
+            }
+            catch (FileNotFoundException) { }
+
+            return fileList;
         }
 
         public List<FileModel> getAllFiles()
@@ -230,6 +288,7 @@ namespace u17004111_HW04.Controllers
             return files;
         }
 
+        //This handles getting the current user to assign them as an author when they upload a file.
         public User getCurrent()
         {
             var userFile = System.Web.Hosting.HostingEnvironment.MapPath("~/App_Data/currentuser.ser");

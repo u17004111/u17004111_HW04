@@ -30,9 +30,9 @@
                     <li class="nav-item">
                         @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })
                     </li>
-                    <li class="nav-item">
+                    @*<li class="nav-item">
                         @Html.ActionLink("Admin", "Admin", "Admin", null, new { @class = "nav-link" })
-                    </li>
+                    </li>*@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                             Materials
@@ -48,9 +48,12 @@
                     </li>
                 </ul>
                 <div class="ml-auto mr-0">
-                    @Html.ActionLink("Login", "Login", "Account", null, new { @class = "" })
+                    @*@Html.ActionLink("Login", "Login", "Account", null, new { @class = "" })*@
                     
-                    <img width="50px" height="50px" src="~/Resources/Other_Images/userImage.png" class="img-fluid" />
+                    <a href="@Url.Action("Profile", "Account")">
+                        <img width="50px" height="50px" src="~/Resources/Other_Images/userImage.png" class="img-fluid" />
+                    </a>
+                    
                 </div>
 
             </div>

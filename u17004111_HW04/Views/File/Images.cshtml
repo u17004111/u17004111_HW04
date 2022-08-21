@@ -18,12 +18,12 @@
                         </div>
 
                         <div class="card-body h-100">
-                            <p class="card-text"><small class="text-muted">@image.FileName</small></p>
+                            <p class="card-text">@image.FileName</p>
+                            <p class="card-text"><small class="text-muted">@image.Author</small></p>
                         </div>
                         <div class="card-footer">
                             <span>
                                 @Html.ActionLink("Download", "Download", "File", new { fileName = image.FileName }, new { @class = "btn btn-primary" })
-                                @Html.ActionLink("Delete", "Delete", "File", new { fileName = image.FileName }, new { @class = "btn btn-secondary" })
                             </span>
                         </div>
                     </div>

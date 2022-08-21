@@ -1,0 +1,41 @@
+﻿<h2> Review members page. </h2>
+@model IEnumerable<u17004111_HW04.Models.User>
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        <table class="table">
+            <tr>
+                <th>
+                    Filename
+                </th>
+                <th>
+                    Author
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+
+            @if (Model != null)
+            {
+
+                foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.Name</td>
+                        <td>@user.Surname </td>
+                        <td>@user.getUsername()</td>
+                        <td>@user.membershipLength()</td>
+                        <td>@Html.ActionLink("Delete", "deleteUser", "Account", new { deleteUser = user.getUsername() }, new { @class = "btn btn-danger"})</td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+}
+
+<br />
+<div>
+    @Html.ActionLink("Back to Admin page", "Admin")
+</div>

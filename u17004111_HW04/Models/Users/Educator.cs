@@ -12,7 +12,6 @@ namespace u17004111_HW04.Models
         public int contributionCount { get; set; }
 
         public List<string> Contributions = new List<string>();
-        public List<int> ratings = new List<int>();
 
         //Base constructor
         public Educator() : base() { }
@@ -24,19 +23,21 @@ namespace u17004111_HW04.Models
             contributionCount = contributioncount;
         }
 
-        public override int getRating()
+        //Educator rating based off of number of materials uploaded.
+        public override int Rating
         {
-            int avgRating = 0;
-
-            foreach (int rating in ratings)
+            get
             {
-                avgRating += rating;
+                int rating = 0;
+
+                foreach (string file in Contributions)
+                {
+                    rating++;
+                }
+
+                
+                return rating;
             }
-
-            avgRating = avgRating / ratings.Count();
-            userRating = avgRating;
-
-            return userRating;
         }
 
         public override int worksContributed()

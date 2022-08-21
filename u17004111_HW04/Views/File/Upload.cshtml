@@ -1,6 +1,7 @@
 ﻿<h1>Upload your educational materials</h1>
-@using (Html.BeginForm("Upload", "File", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
+@*@using (Html.BeginForm("Upload", "File", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{*@
+<form method="post" enctype="multipart/form-data">
     <div>
         <!-- Radio buttons to capture what type of file is being uploaded -->
         <br />
@@ -23,7 +24,10 @@
         </div>
     </div>
     @Html.Hidden("selectedRadio")
-}
+</form>
+@*}*@
+
+<h3>@ViewData["Message"]</h3>
 
 <script>
     $("#selectedRadio").val("doc");

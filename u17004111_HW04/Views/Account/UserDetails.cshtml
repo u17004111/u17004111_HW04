@@ -1,0 +1,68 @@
+﻿@model dynamic
+
+@{
+    //var user = ViewData["usertype"];
+    //This user object in the model is the current user.
+    var usermodel = Model.currentUser;
+    var usertype = usermodel.GetType().Name;
+
+    if (usermodel != null)
+    {
+        <h1>Login successful!</h1>
+        <h3>@usermodel.getUsername()</h3>
+        <h3>@usertype</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Surname
+                    </th>
+                    <th>
+                        Username
+                    </th>
+                    <th>
+                        Password
+                    </th>
+                    <th>
+                        Membership length
+                    </th>
+                    <th>
+                        Rating
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @usermodel.Name
+                    </td>
+                    <td>
+                        @usermodel.Surname
+                    </td>
+                    <td>
+                        @usermodel.getUsername()
+                    </td>
+                    <td>
+                        @usermodel.getPassword()
+                    </td>
+                    <td>
+                        @usermodel.membershipLength()
+                    </td>
+                    <td>
+                        @usermodel.Rating
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+        
+        @Html.ActionLink("Logout", "Logout", "Account");
+    }
+    else
+    {
+        <h1>No user is logged in.</h1>
+    }
+}

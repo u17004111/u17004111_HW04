@@ -34,36 +34,52 @@
 <hr />
 
 <h2>READ's Sustainable Development Goals</h2>
-<h5>The three SDG's below have been identified to be the ones that READ overarchingly aims to work towards.</h5>
-
-
 <br />
+<div class="">
+    <div class="row">
+        <div class="col-7">
+            <h5>
+                As read on READ's website: "READ delivers community and life-skills training to young people about to enter the workforce,
+                as well as training for adults in business, including presentation, communication and conflict resolution skills."
+            </h5>
+            <hr />
+            <p>
+                I feel that READ most aligns with SDG's 3, 8 and 10, with SDG 8 being a precursor to SDG 3 and 10. What I mean by this is: READ directly attempts to
+                promote economic growth and full and productive employment. (SDG 8) They do this via educating and providing resources to people about to enter the workforce.
+                This in turn influences SDG's 3 and 10. SDG 3 being Good Health and Wellbeing, which can be brought about by gainful employment and a stable career. SDG 10 being reduced inequalities,
+                brought about by more people having access to the knowledge and resources that could allow for gainful employment.
+            </p>
+            <p>
+                As soon as I had read about READ's mission, I began wondering why they didn't have a filshare platform set up. READ could use this to better reach the
+                people in need of their services. So I set about creating a simple fileshare platform for READ, and, notably one that doesn't even need SQL for persistent storage.
+                Making use of SQL would arguably made implementation much easier, but seeing as we only learnt about it in the week of the 15th of August, I decided to continue without it.
+                The persistent storage was mainly used to keep track of users, user logins, and files via a file registry.
+            </p>
+        </div>
+        <div class="col-5">
+            <div class="row row-cols-1 row-cols-sm-2" id="cardHolder">
+                @{
+                    foreach (var card in Model)
+                    {
+                        var number = card.Number;
+                        var otherSDGString = "otherSDG" + number.ToString();
 
-<!-- Write some razor here that dynamically populates the webpage with the SDG cards -->
-<!-- Put some JS or JQ in as well so one can change the cards from compact grid view to larger informative view -->
-<!-- Put some JS or JQ in as well for dark/light mode -->
-<div class="body-content">
-    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 " id="cardHolder">
-        @{
-            foreach (var card in Model)
-            {
-                var number = card.Number;
-                var otherSDGString = "otherSDG" + number.ToString();
-
-                if (number == 3 || number == 8 || number == 10)
-                {
-                    <div class="col mb-4">
-                        <div class="card h-100">
-                            <img src="~/Resources/SDG/Thumbnails/@card.Img_title" id="sdgCard" name="@card.Img_title" value="@card.Description" class="card-img-top" alt="@card.Img_title" type="button" loading="lazy" />
-                            <div class="card-img-overlay" hidden>
-                                <h5 class="card-title">@card.Title</h5>
-                                <p class="card-text">@card.Description</p>
+                        if (number == 3 || number == 8 || number == 10)
+                        {
+                            <div class="col mb-4">
+                                <div class="card h-100">
+                                    <img src="~/Resources/SDG/Thumbnails/@card.Img_title" id="sdgCard" name="@card.Img_title" value="@card.Description" class="card-img-top" alt="@card.Img_title" type="button" loading="lazy" />
+                                    <div class="card-img-overlay" hidden>
+                                        <h5 class="card-title">@card.Title</h5>
+                                        <p class="card-text">@card.Description</p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        }
+                    }
                 }
-            }
-        }
+            </div>
+        </div>
     </div>
     <hr />
 

@@ -13,7 +13,7 @@ namespace u17004111_HW04.Models
     public abstract class User
     {
         public int userID { get; set; }
-        public int userRating { get; set; }
+        private int userRating { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
@@ -32,7 +32,7 @@ namespace u17004111_HW04.Models
             Name = name;
             Surname = surname;
             Email = email;
-            JoinDate = joinDate;
+            JoinDate = DateTime.Now;
             Username = username;
             Password = password;
             this.loggedIn = loggedIn;
@@ -48,15 +48,16 @@ namespace u17004111_HW04.Models
         //For contributors, ratings will be based off of how well other user's rate the contributor's contributions/how many
         //people make use of the contributions
         //For students, ratings will be based on how many contributions they visit/download, or how many quizes they do and how well they do in the quizes.
-        public virtual int getRating() { return (userRating); }
-
+        public virtual int Rating => (userRating);
         //Normal methods
-        public void membershipLength(User currentUser)
+        public TimeSpan membershipLength()
         {
             DateTime current = new DateTime();
+            current = DateTime.Now;
 
-            DateTime difference = new DateTime();
+            System.TimeSpan diff = current.Subtract(JoinDate);
 
+            return diff;
         }
 
         public string getUsername()
